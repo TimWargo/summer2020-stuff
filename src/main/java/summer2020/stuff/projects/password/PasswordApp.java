@@ -2,6 +2,7 @@ package summer2020.stuff.projects.password;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -16,11 +17,23 @@ import javafx.stage.Stage;
  */
 public class PasswordApp extends Application {
 
+    private boolean needsSpecial;
+    private boolean needsUppercase;
+    private boolean needsLowercase;
+    private boolean needsNumber;
+
+
     /** {@inheritDoc} **/
     @Override
     public void start(Stage stage) {
+        CheckBox specialCheck = new CheckBox("Password must contain a special character");
+        CheckBox uppercaseCheck = new CheckBox("Password must contain an uppercase character");
+        CheckBox lowercaseCheck = new CheckBox("Password must contain a lowercase character");
+        CheckBox numberCheck = new CheckBox("Password must contain a number");
+        Button genButton = new Button("generate");
 
-        VBox root = new VBox();
+        VBox checkList = new VBox(5, specialCheck, uppercaseCheck, lowercaseCheck, numberCheck);
+        VBox root = new VBox(10, checkList, genButton);
 
 
 
