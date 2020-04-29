@@ -13,25 +13,49 @@ public class StringFormer {
     /* Random object used to generate a random character, number, etc. */
     private static Random rand = new Random();
 
+    /**
+     * Generates a password based off of the specified requirements for the password and the custom
+     * string.
+     * @param str the initial string used to generate the password.
+     * @param needSpecial determines if the password requires a special character.
+     * @param needUppercase determines if the password requires an uppercase character.
+     * @param needLowercase determines if the password requires a lowercase character.
+     * @param needNumber determines if the password requires a number.
+     * @return A string representing a password based on the requirements.
+     */
     public static String generatePassword(String str, boolean needSpecial,
                                           boolean needUppercase, boolean needLowercase,
                                           boolean needNumber) {
         LinkedList<String> pass = new LinkedList<>();
+        LinkedList<Integer> options = new LinkedList<>();
         pass.add(str);
         if (needSpecial) {
-            pass.add(rand.nextInt(pass.size()), Character.toString(randomSpecial()));
+            options.add(1);
         } // if
         if (needUppercase) {
-            pass.add(rand.nextInt(pass.size()), Character.toString(randomUppercase()));
+            options.add(2);
         } // if
         if (needLowercase) {
-            pass.add(rand.nextInt(pass.size()), Character.toString(randomLowercase()));
+            options.add(3);
         } // if
         if (needNumber) {
-            pass.add(rand.nextInt(pass.size()), Character.toString(randomNumber()));
+            options.add(4);
         } // if
         do {
-            pass.add(rand.nextInt(pass.size()), Character.toString(randomChar()));
+            if (options.size() <= 0) {
+                pass.add(rand.nextInt(pass.size()), Character.toString(randomChar()));
+            } else {
+                int temp = options.get(rand.nextInt(options.size()));
+                if (temp == 1) {
+                    pass.add(rand.nextInt(pass.size()), Character.toString(randomSpecial()));
+                } else if (temp == 2) {
+                    pass.add(rand.nextInt(pass.size()), Character.toString(randomUppercase()));
+                } else if (temp == 3) {
+                    pass.add(rand.nextInt(pass.size()), Character.toString(randomLowercase()));
+                } else {
+                    pass.add(rand.nextInt(pass.size()), Character.toString(randomNumber()));
+                } // if
+            } // if
         } while (pass.stream().reduce("", (a, b) -> a + b).length() < 7);
         return pass.stream().reduce("", (a, b) -> a + b);
     } // generatePassword
@@ -55,7 +79,6 @@ public class StringFormer {
 
     /**
      * Returns a random number.
-     *
      * @return A random number.
      */
     public static char randomNumber() {

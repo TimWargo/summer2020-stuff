@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -38,7 +40,9 @@ public class PasswordApp extends Application {
         Button genButton = new Button("generate");
         Text message = new Text("Your password is: ");
         Text password = new Text("");
-        HBox box = new HBox(message, password, genButton);
+        Region space = new Region();
+        HBox box = new HBox(message, password, space, genButton);
+        HBox.setHgrow(space, Priority.ALWAYS);
         VBox checkList = new VBox(5, specialCheck, uppercaseCheck, lowercaseCheck, numberCheck);
         genButton.setOnAction(e -> {
                 getConditions();
