@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import summer2020.stuff.utility.StringFormer;
 
 /**
  * Class that creates a password-making application where the user can generate passwords
@@ -21,19 +22,30 @@ public class PasswordApp extends Application {
     private boolean needsUppercase;
     private boolean needsLowercase;
     private boolean needsNumber;
+    CheckBox specialCheck;
+    CheckBox uppercaseCheck;
+    CheckBox lowercaseCheck;
+    CheckBox numberCheck;
 
 
     /** {@inheritDoc} **/
     @Override
     public void start(Stage stage) {
-        CheckBox specialCheck = new CheckBox("Password must contain a special character");
-        CheckBox uppercaseCheck = new CheckBox("Password must contain an uppercase character");
-        CheckBox lowercaseCheck = new CheckBox("Password must contain a lowercase character");
-        CheckBox numberCheck = new CheckBox("Password must contain a number");
+        specialCheck = new CheckBox("Password must contain a special character");
+        uppercaseCheck = new CheckBox("Password must contain an uppercase character");
+        lowercaseCheck = new CheckBox("Password must contain a lowercase character");
+        numberCheck = new CheckBox("Password must contain a number");
         Button genButton = new Button("generate");
-
+        Text message = new Text("Your password is: ");
+        Text password = new Text("");
+        HBox box = new HBox(message, password, genButton);
         VBox checkList = new VBox(5, specialCheck, uppercaseCheck, lowercaseCheck, numberCheck);
-        VBox root = new VBox(10, checkList, genButton);
+        genButton.setOnAction(e -> {
+                getConditions();
+                password.setText(StringFormer.generatePassword("", needsSpecial, needsUppercase,
+                                                               needsLowercase, needsNumber));
+            });
+        VBox root = new VBox(10, checkList, box);
 
 
 
@@ -45,4 +57,14 @@ public class PasswordApp extends Application {
         stage.sizeToScene();
         stage.show();
     } // start
+
+    /**
+     * Determines the conditions for the password being generated
+     */
+    private void getConditions() {
+        needsSpecial = specialCheck.isSelected();
+        needsLowercase = lowercaseCheck.isSelected();
+        needsUppercase = uppercaseCheck.isSelected();
+        needsNumber = numberCheck.isSelected();
+    } // getConditions
 } // PasswordApp

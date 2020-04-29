@@ -1,5 +1,6 @@
 package summer2020.stuff.utility;
 
+import java.util.LinkedList;
 import java.util.Random;
 
 /**
@@ -12,8 +13,24 @@ public class StringFormer {
     /* Random object used to generate a random character, number, etc. */
     private static Random rand = new Random();
 
-    public static String generatePassword(String string) {
-        return "";
+    public static String generatePassword(String str, boolean needSpecial,
+                                          boolean needUppercase, boolean needLowercase,
+                                          boolean needNumber) {
+        LinkedList<String> pass = new LinkedList<>();
+        pass.add(str);
+        if (needSpecial) {
+            pass.add(rand.nextInt(pass.size()), Character.toString(randomSpecial()));
+        } // if
+        if (needUppercase) {
+            pass.add(rand.nextInt(pass.size()), Character.toString(randomUppercase()));
+        } // if
+        if (needLowercase) {
+            pass.add(rand.nextInt(pass.size()), Character.toString(randomLowercase()));
+        } // if
+        if (needNumber) {
+            pass.add(rand.nextInt(pass.size()), Character.toString(randomNumber()));
+        } // if
+        return pass.stream().reduce("", (a, b) -> a + b);
     } // generatePassword
 
     /**
@@ -43,7 +60,7 @@ public class StringFormer {
     } // randomNumber
 
     /**
-     * Returns a special character.
+     * Returns a random special character.
      * The list of special characters that this method may return are:
      * ASCII Index 33, 35-38, 42, 63, 64, and 126
      * @return A random special character based on the specified valid characters.
@@ -53,11 +70,19 @@ public class StringFormer {
         return (char) (list[rand.nextInt(9)]);
     } // randomSpecial
 
+    /**
+     * Returns a random uppercase character.
+     * @return A random uppercase character.
+     */
     public static char randomUppercase() {
-        return '0';
+        return (char) (rand.nextInt(26) + 'A');
     } // randomUppercase
 
+    /**
+     * Returns a random lowercase character.
+     * @return A random lowercase character.
+     */
     public static char randomLowercase() {
-        return '0';
+        return (char) (rand.nextInt(26) + 'a');
     } // randomLowercase
 } // StringFormer
