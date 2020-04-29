@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -37,22 +38,24 @@ public class PasswordApp extends Application {
     /** {@inheritDoc} **/
     @Override
     public void start(Stage stage) {
-        specialCheck = new CheckBox("Password must contain a special character");
-        uppercaseCheck = new CheckBox("Password must contain an uppercase character");
-        lowercaseCheck = new CheckBox("Password must contain a lowercase character");
-        numberCheck = new CheckBox("Password must contain a number");
+        specialCheck = new CheckBox("Contains a special character");
+        uppercaseCheck = new CheckBox("Contains an uppercase character");
+        lowercaseCheck = new CheckBox("Contains a lowercase character");
+        numberCheck = new CheckBox("Contains a number");
         Button genButton = new Button("generate");
         Text message = new Text("Your password is: ");
         Text password = new Text("");
         Region space = new Region();
-
+        TextField field = new TextField();
         Label title = new Label("Password Generator");
         HBox titleBox = new HBox(title);
         titleBox.setAlignment(Pos.CENTER);
-
+        Text specialTextMessage = new Text("Words you want included into the password:");
+        HBox specialText = new HBox(8, specialTextMessage, field);
         HBox box = new HBox(message, password, space, genButton);
         HBox.setHgrow(space, Priority.ALWAYS);
-        VBox checkList = new VBox(5, specialCheck, uppercaseCheck, lowercaseCheck, numberCheck);
+        VBox checkList = new VBox(5, specialCheck, uppercaseCheck, lowercaseCheck,
+                                  numberCheck, specialText);
         genButton.setOnAction(e -> {
                 getConditions();
                 password.setText(StringFormer.generatePassword("", needsSpecial, needsUppercase,
