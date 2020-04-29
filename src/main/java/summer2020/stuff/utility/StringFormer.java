@@ -30,6 +30,9 @@ public class StringFormer {
         if (needNumber) {
             pass.add(rand.nextInt(pass.size()), Character.toString(randomNumber()));
         } // if
+        do {
+            pass.add(rand.nextInt(pass.size()), Character.toString(randomChar()));
+        } while (pass.stream().reduce("", (a, b) -> a + b).length() < 7);
         return pass.stream().reduce("", (a, b) -> a + b);
     } // generatePassword
 
@@ -40,7 +43,7 @@ public class StringFormer {
      * @return A random character based on the specified valid characters.
      */
     public static char randomChar() {
-        char c = (char) (rand.nextInt(94) + 'a');
+        char c = (char) (rand.nextInt(89) + '!');
         if (c == 34 || c == 39 || c == 40 || c == 41
             || (c > 42 && c < 48) || (c > 57 && c < 63)
             || (c > 90 && c < 97)) {
