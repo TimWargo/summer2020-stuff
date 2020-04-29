@@ -1,16 +1,20 @@
 package summer2020.stuff.projects.password;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import summer2020.stuff.utility.StringFormer;
+import java.util.List;
 
 /**
  * Class that creates a password-making application where the user can generate passwords
@@ -41,6 +45,11 @@ public class PasswordApp extends Application {
         Text message = new Text("Your password is: ");
         Text password = new Text("");
         Region space = new Region();
+
+        Label title = new Label("Password Generator");
+        HBox titleBox = new HBox(title);
+        titleBox.setAlignment(Pos.CENTER);
+
         HBox box = new HBox(message, password, space, genButton);
         HBox.setHgrow(space, Priority.ALWAYS);
         VBox checkList = new VBox(5, specialCheck, uppercaseCheck, lowercaseCheck, numberCheck);
@@ -49,12 +58,7 @@ public class PasswordApp extends Application {
                 password.setText(StringFormer.generatePassword("", needsSpecial, needsUppercase,
                                                                needsLowercase, needsNumber));
             });
-        VBox root = new VBox(10, checkList, box);
-
-
-
-
-
+        VBox root = new VBox(10, titleBox, checkList, box);
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle("Password Generator");
