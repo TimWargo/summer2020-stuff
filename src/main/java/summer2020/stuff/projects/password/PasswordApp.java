@@ -58,7 +58,7 @@ public class PasswordApp extends Application {
                                   numberCheck, specialText);
         genButton.setOnAction(e -> {
                 getConditions();
-                password.setText(StringFormer.generatePassword("", needsSpecial, needsUppercase,
+                password.setText(StringFormer.generatePassword(field.getText(), needsSpecial, needsUppercase,
                                                                needsLowercase, needsNumber));
             });
         VBox root = new VBox(10, titleBox, checkList, box);

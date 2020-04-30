@@ -52,7 +52,7 @@ public class StringFormer {
                     pass.add(rand.nextInt(pass.size()), Character.toString(randomUppercase()));
                 } else if (temp == 3) {
                     pass.add(rand.nextInt(pass.size()), Character.toString(randomLowercase()));
-                } else {
+                } else if (temp == 4) {
                     pass.add(rand.nextInt(pass.size()), Character.toString(randomNumber()));
                 } // if
             } // if
