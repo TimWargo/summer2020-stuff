@@ -14,55 +14,6 @@ public class StringFormer {
     private static Random rand = new Random();
 
     /**
-     * Generates a password based off of the specified requirements for the password and the custom
-     * string.
-     * @param str the initial string used to generate the password.
-     * @param needSpecial determines if the password requires a special character.
-     * @param needUppercase determines if the password requires an uppercase character.
-     * @param needLowercase determines if the password requires a lowercase character.
-     * @param needNumber determines if the password requires a number.
-     * @return A string representing a password based on the requirements.
-     */
-    public static String generatePassword(String str, boolean needSpecial,
-                                          boolean needUppercase, boolean needLowercase,
-                                          boolean needNumber) {
-        LinkedList<String> pass = new LinkedList<>();
-        LinkedList<Integer> options = new LinkedList<>();
-        pass.add(str);
-        if (needSpecial) {
-            options.add(1);
-        } // if
-        if (needUppercase) {
-            options.add(2);
-        } // if
-        if (needLowercase) {
-            options.add(3);
-        } // if
-        if (needNumber) {
-            options.add(4);
-        } // if
-        do {
-            if (options.size() <= 0) {
-                pass.add(rand.nextInt(pass.size() + 1), Character.toString(randomChar()));
-            } else {
-                int temp = options.get(rand.nextInt(options.size()));
-                if (temp == 1) {
-                    pass.add(rand.nextInt(pass.size() + 1), Character.toString(randomSpecial()));
-                } else if (temp == 2) {
-                    pass.add(rand.nextInt(pass.size() + 1), Character.toString(randomUppercase()));
-                } else if (temp == 3) {
-                    pass.add(rand.nextInt(pass.size() + 1), Character.toString(randomLowercase()));
-                } else if (temp == 4) {
-                    pass.add(rand.nextInt(pass.size() + 1), Character.toString(randomNumber()));
-                } // if
-            } // if
-        } while (!isSatisfied(pass.stream().reduce(str, (a, b) -> a + b), needSpecial,
-                              needUppercase, needLowercase, needNumber)
-                 && pass.stream().reduce(str, (a, b) -> a + b).length() < 15);
-        return pass.stream().reduce("", (a, b) -> a + b);
-    } // generatePassword
-
-    /**
      * Returns a random character.
      * The random character will be from the following ASCII table values:
      * ASCII Index 33, 35-38, 42, 48-57, 63-90, 97-122
@@ -114,43 +65,4 @@ public class StringFormer {
         return (char) (rand.nextInt(26) + 'a');
     } // randomLowercase
 
-
-    /**
-     * Helper method to check that the given password satisfies
-     * the given boolean conditions the password must meet.
-     * @param str the password that is being checked.
-     * @param special the condition of if the password must contain a special character.
-     * @param uppercase the condition of if the password must contain an uppercase character.
-     * @param lowercase the condition of if the password must contain a lowercase character.
-     * @param number the condition of if the password must contain a number.
-     * @return true if the password satisfies each of the conditions and the password is
-     * between 7 and 15 characters long. Returns false otherwise.
-     */
-    private static boolean isSatisfied(String str, boolean special, boolean uppercase,
-                                       boolean lowercase, boolean number) {
-        int[] specialVal = new int[] {33, 35, 36, 37, 38, 42, 63, 64, 126};
-        boolean s = false;
-        boolean u = false;
-        boolean l = false;
-        boolean n = false;
-        for (int i = 0; i < str.length(); i++) {
-            /* Checks special characters */
-            for (int j = 0; j < specialVal.length; j++) {
-                if (str.charAt(i) == (char) specialVal[j]) {
-                    s = true;
-                } // if
-            } // for
-            /* Checks uppercase, then lowercase, then numbers */
-            if (str.charAt(i) > 64 && str.charAt(i) < 91) {
-                u = true;
-            } else if (str.charAt(i) > 96 && str.charAt(i) < 123) {
-                l = true;
-            } else if (str.charAt(i) > 47 && str.charAt(i) < 58) {
-                n = true;
-            } // if
-        } // for
-        return (!special || (special && s)) && (!uppercase || (uppercase && u))
-            && (!lowercase || (lowercase && l)) && (!number || (number && n))
-            && str.length() > 7 && str.length() < 15;
-    } // isSatisfied
 } // StringFormer
