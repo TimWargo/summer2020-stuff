@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -15,11 +14,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import summer2020.stuff.utility.StringFormer;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -53,6 +52,7 @@ public class PasswordApp extends Application {
         Region space = new Region();
         TextField field = new TextField();
         Label title = new Label("Password Generator");
+        title.setFont(Font.font("Symbol", FontWeight.BOLD, 20));
         HBox titleBox = new HBox(title);
         titleBox.setAlignment(Pos.CENTER);
         Text specialTextMessage = new Text("Words you want included into the password:");
@@ -74,9 +74,10 @@ public class PasswordApp extends Application {
                     alert.show();
                 } // try
             });
-        Text version = new Text(" Version 1.0.115");
+        Text version = new Text(" Version 1.2.110");
         VBox root = new VBox(10, titleBox, checkList, box, version);
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("file:src/main/resources/projects/password/main.css");
         stage.setScene(scene);
         stage.setTitle("Password Generator");
         stage.sizeToScene();
