@@ -1,6 +1,7 @@
 package summer2020.stuff.projects.password;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -42,25 +43,35 @@ public class PasswordApp extends Application {
     /** {@inheritDoc} **/
     @Override
     public void start(Stage stage) {
+        /* Initializes the checkboxes */
         specialCheck = new CheckBox("Contains a special character");
         uppercaseCheck = new CheckBox("Contains an uppercase character");
         lowercaseCheck = new CheckBox("Contains a lowercase character");
         numberCheck = new CheckBox("Contains a number");
+
+        /* Initializes various objects for the application */
         Button genButton = new Button("generate");
         Text message = new Text("Your password is: ");
         Text password = new Text("");
         Region space = new Region();
         TextField field = new TextField();
+
+        /* Initializes and formats the title */
         Label title = new Label("Password Generator");
-        title.setFont(Font.font("Symbol", FontWeight.BOLD, 20));
+        title.setFont(Font.font("Symbol", FontWeight.EXTRA_BOLD, 28));
         HBox titleBox = new HBox(title);
         titleBox.setAlignment(Pos.CENTER);
+
         Text specialTextMessage = new Text("Words you want included into the password:");
+
+        /* Begins the heirarchy */
         HBox specialText = new HBox(8, specialTextMessage, field);
         HBox box = new HBox(message, password, space, genButton);
         HBox.setHgrow(space, Priority.ALWAYS);
         VBox checkList = new VBox(5, specialCheck, uppercaseCheck, lowercaseCheck,
                                   numberCheck, specialText);
+
+        /* Creates functionality for the button */
         rand = new Random();
         genButton.setOnAction(e -> {
                 getConditions();
@@ -71,11 +82,17 @@ public class PasswordApp extends Application {
                                             "cannot generate password based"
                                             + " on supplied requirements.",
                                             ButtonType.CLOSE);
+                    alert.getDialogPane().getStylesheets().add("file:src/main/resources/projects/password/main.css");
                     alert.show();
                 } // try
             });
+
         Text version = new Text(" Version 1.2.110");
+
+        /* Final heirarchy adjustments */
         VBox root = new VBox(10, titleBox, checkList, box, version);
+        root.setPadding(new Insets(5, 5, 5, 5));
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add("file:src/main/resources/projects/password/main.css");
         stage.setScene(scene);
