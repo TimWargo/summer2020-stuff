@@ -6,3 +6,6 @@ hs_err_pid*
 *~
 \#*\#
 core.*
+.classpath
+.project
+.settings/*
