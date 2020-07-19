@@ -1,0 +1,7 @@
+List of Accounts:
+
+Account #1:
+    username: account1234
+    password: account1234
+    Name: Account_1
+    Bio: Test Test Test Test
