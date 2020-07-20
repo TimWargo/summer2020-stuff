@@ -73,31 +73,47 @@ public class LoginPage extends Scene {
      * Private method that deals with the functionality of the log-in feature.
      */
     private void loginFunctionality() {
-        try {
-            fileScan = new Scanner(new File("target/classes/projects/profile/Accounts.txt."));
-        } catch(NullPointerException npe) {
-            System.out.println("Could not find file specified");
-        } catch(FileNotFoundException fnfe) {
-            System.out.println("Could not find file specified");
-        } // try
         userField = new TextField("username");
         passField = new TextField("password");
         logButton = new Button("Log In");
         logButton.setTextAlignment(TextAlignment.CENTER);
         logButton.setMaxWidth(300);
         logButton.setOnAction(event -> {
+            try {
+                fileScan = new Scanner(new File("target/classes/projects/profile/Accounts.txt."));
+            } catch(NullPointerException npe) {
+                System.out.println("Could not find file specified");
+            } catch(FileNotFoundException fnfe) {
+                System.out.println("Could not find file specified");
+            } // try
             String user = new String(userField.getText());
             String pass = new String(passField.getText());
+            boolean isFound = false;
             while(fileScan.hasNext()) {
-                if (fileScan.nextLine().contains("Account #")) {
-                    try {
-                        System.out.println(fileScan.next("username:"));
-                        System.out.println(fileScan.next("password:"));
-                    } catch (NoSuchElementException nsee) {
-                        System.out.println("Does not exist");
-                    } // try
+                String line = fileScan.nextLine();
+                if (line.contains("username")) {
+                    String userList = line.substring(line.indexOf("username") + 10);
+                    if (userList.equals(user)) {
+                        isFound = true;
+                        String passList = fileScan.nextLine();
+                        passList = passList.substring(passList.indexOf("password") + 10);
+                        if (passList.equals(pass)) {
+                            System.out.println("Horray, you did it!");
+                            // new scene here
+                            break;
+                        } else {
+                            System.out.println("Either password or username is wrong");
+                            // new alertbox here
+                        } // if
+                    } else {
+                        continue;
+                    } // if
                 } // if
             } // while
+            if (!isFound) {
+                System.out.println("Either password or username is wrong");
+                // new alertbox here
+            } // if
         });
     } // loginFunctionality
 } // LoginPage

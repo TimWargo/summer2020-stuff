@@ -5,3 +5,9 @@ Account #1:
     password: account1234
     Name: Account_1
     Bio: Test Test Test Test
+
+Account #2:
+    username: account12345
+    password: account12345
+    Name: Account_2
+    Bio: Test Test Test Test Test
